@@ -33,7 +33,7 @@ jobs:
             -e ACCESS_KEY=${ACCESS_KEY} \
             -e SECRET_KEY=${SECRET_KEY} \
             --link petstore \
-            tenable/was-scanner:latest || true
+            tenable/was-scanner:latest
         env:
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
