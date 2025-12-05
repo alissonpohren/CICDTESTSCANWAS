@@ -1,0 +1,51 @@
+name: CI - Tenable WAS PetStore
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  tenablescan:
+    name: was-cicd
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build + Run PetStore
+        run: |
+          docker pull swaggerapi/petstore
+          docker run -d \
+            -e SWAGGER_URL=http://petstore:8080 \
+            -e SWAGGER_BASE_PATH=/v2 \
+            --name petstore \
+            swaggerapi/petstore
+
+      - name: Run Tenable WAS Scanner
+        run: |
+          docker pull tenable/was-scanner:latest
+          docker run \
+            -v ${{ github.workspace }}:/scanner \
+            -t \
+            -e WAS_MODE=cicd \
+            -e ACCESS_KEY=${ACCESS_KEY} \
+            -e SECRET_KEY=${SECRET_KEY} \
+            --link petstore \
+            tenable/was-scanner:latest || true
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+      - name: Upload Tenable WAS HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: tenable-was-report
+          path: tenable_was_scan.html
+
+      - name: Upload Tenable WAS logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tenable-was-logs
+          path: scanner.log
