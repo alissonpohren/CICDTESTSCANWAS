@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>App DAST Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .card {
+        background: #fff;
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      }
+      label {
+        display: block;
+        margin: 8px 0 4px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 8px;
+        background: #eee;
+        border-radius: 4px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Aplicação Demo para Testes DAST</h1>
+
+    <div class="card">
+      <h2>Health Check</h2>
+      <button id="btnHealth">Testar /api/health</button>
+      <div id="healthResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label for="username">Usuário</label>
+        <input id="username" name="username" value="admin" />
+
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" value="admin123" />
+
+        <button type="submit">Login</button>
+      </form>
+      <div id="loginResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Busca (GET /api/search?q=)</h2>
+      <form id="searchForm">
+        <label for="query">Termo de busca</label>
+        <input id="query" name="query" value="teste" />
+        <button type="submit">Buscar</button>
+      </form>
+      <div id="searchResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Enviar Mensagem (POST /api/messages)</h2>
+      <form id="messageForm">
+        <label for="name">Nome</label>
+        <input id="name" name="name" value="João da Silva" />
+
+        <label for="email">E-mail</label>
+        <input id="email" name="email" value="joao@example.com" />
+
+        <label for="message">Mensagem</label>
+        <textarea id="message" name="message">Mensagem de teste DAST</textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+      <div id="messageResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Listar Mensagens (GET /api/messages)</h2>
+      <button id="btnListMessages">Carregar mensagens</button>
+      <div id="listMessagesResult" class="result"></div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
